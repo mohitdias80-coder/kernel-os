@@ -6,4 +6,6 @@ members = [
     "crates/kos-runtime",
     "crates/kos-context",
     "crates/kos-compute",
+    "crates/kos-capability",
 ]
+
