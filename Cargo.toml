@@ -3,4 +3,4 @@ resolver = "2"
 
 members = [
     "crates/kos-core"
-]
+, "crates/kos-runtime"]
