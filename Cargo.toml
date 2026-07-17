@@ -8,5 +8,6 @@ members = [
     "crates/kos-compute",
     "crates/kos-capability",
     "crates/kos-trust",
+    "crates/kos-knowledge",
 ]
 
