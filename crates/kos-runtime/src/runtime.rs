@@ -1,66 +1,64 @@
-use kos_core::MissionId;
+use kos_compute::ComputeManager;
+use kos_context::{ContextManager, ContextSpace};
+use kos_core::{ContextId, MissionId};
 
-use crate::{
-    FifoScheduler,
-    Mission,
-    MissionManager,
-    Scheduler,
-};
+use crate::{Mission, MissionManager};
 
-/// Main Kernel OS Mission Runtime.
-///
-/// Responsible for:
-/// - Creating missions
-/// - Registering missions
-/// - Scheduling execution
+/// Central Kernel OS runtime.
 pub struct Runtime {
-    manager: MissionManager,
-    scheduler: FifoScheduler,
-    next_id: u64,
+    missions: MissionManager,
+    contexts: ContextManager,
+    compute: ComputeManager,
+
+    next_mission_id: u64,
+    next_context_id: u64,
 }
 
 impl Runtime {
-    /// Create a new runtime.
     pub fn new() -> Self {
         Self {
-            manager: MissionManager::new(),
-            scheduler: FifoScheduler::new(),
-            next_id: 1,
+            missions: MissionManager::new(),
+            contexts: ContextManager::new(),
+            compute: ComputeManager::new(),
+            next_mission_id: 1,
+            next_context_id: 1,
         }
     }
 
-    /// Create a new Mission.
+    /// Create a Mission and its Context together.
     pub fn create_mission(
         &mut self,
-        name: &str,
+        name: impl Into<String>,
     ) -> MissionId {
+        let mission_id = MissionId(self.next_mission_id);
+        self.next_mission_id += 1;
 
-        let id = MissionId(self.next_id);
+        let context_id = ContextId(self.next_context_id);
+        self.next_context_id += 1;
 
-        self.next_id += 1;
+let context =
+    ContextSpace::new(context_id, "Default");
 
-        let mission = Mission::new(id, name);
+        self.contexts.insert(context);
 
-        self.manager.insert(mission);
+        let mission =
+            Mission::new(mission_id, context_id, name);
 
-        self.scheduler.enqueue(id);
+        self.missions.insert(mission);
 
-        id
+        mission_id
     }
 
-    /// Get immutable MissionManager.
-    pub fn manager(&self) -> &MissionManager {
-        &self.manager
+    pub fn missions(&self) -> &MissionManager {
+        &self.missions
     }
 
-    /// Get mutable MissionManager.
-    pub fn manager_mut(&mut self) -> &mut MissionManager {
-        &mut self.manager
+    pub fn contexts(&self) -> &ContextManager {
+        &self.contexts
     }
 
-    /// Access scheduler.
-    pub fn scheduler(&mut self) -> &mut FifoScheduler {
-        &mut self.scheduler
+    pub fn compute(&self) -> &ComputeManager {
+        &self.compute
     }
 }
 

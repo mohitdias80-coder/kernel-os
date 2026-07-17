@@ -87,10 +87,11 @@ dependencies = [
 name = "kos-runtime"
 version = "0.1.0"
 dependencies = [
+ "kos-compute",
+ "kos-context",
  "kos-core",
  "serde",
  "thiserror",
- "uuid",
 ]
 
 [[package]]

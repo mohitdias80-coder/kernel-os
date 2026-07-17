@@ -1,21 +1,28 @@
-use kos_core::MissionId;
+use kos_core::{ContextId, MissionId};
 
 use crate::MissionState;
 
-/// A Mission is the primary execution unit in Kernel OS.
-/// Similar to a process in Linux, but specialized for AI workloads.
+/// Represents a Mission managed by the Kernel OS Runtime.
+///
+/// Every Mission owns exactly one Context.
 #[derive(Debug, Clone)]
 pub struct Mission {
     id: MissionId,
+    context: ContextId,
     name: String,
     state: MissionState,
 }
 
 impl Mission {
-    /// Create a new mission.
-    pub fn new(id: MissionId, name: impl Into<String>) -> Self {
+    /// Create a new Mission.
+    pub fn new(
+        id: MissionId,
+        context: ContextId,
+        name: impl Into<String>,
+    ) -> Self {
         Self {
             id,
+            context,
             name: name.into(),
             state: MissionState::Created,
         }
@@ -26,54 +33,23 @@ impl Mission {
         self.id
     }
 
-    /// Human-readable mission name.
+    /// Context owned by this Mission.
+    pub fn context(&self) -> ContextId {
+        self.context
+    }
+
+    /// Mission name.
     pub fn name(&self) -> &str {
         &self.name
     }
 
-    /// Current lifecycle state.
+    /// Current Mission state.
     pub fn state(&self) -> MissionState {
         self.state
     }
 
-    /// Transition to Queued.
-    pub fn queue(&mut self) {
-        self.state = MissionState::Queued;
-    }
-
-    /// Transition to Running.
-    pub fn execute(&mut self) {
-        self.state = MissionState::Running;
-    }
-
-    /// Transition to Waiting.
-    pub fn wait(&mut self) {
-        self.state = MissionState::Waiting;
-    }
-
-    /// Transition to Suspended.
-    pub fn suspend(&mut self) {
-        self.state = MissionState::Suspended;
-    }
-
-    /// Transition to Migrating.
-    pub fn migrate(&mut self) {
-        self.state = MissionState::Migrating;
-    }
-
-    /// Transition to Completed.
-    pub fn complete(&mut self) {
-        self.state = MissionState::Completed;
-    }
-
-    /// Transition to Failed.
-    pub fn fail(&mut self) {
-        self.state = MissionState::Failed;
-    }
-
-    /// Transition to Archived.
-    pub fn archive(&mut self) {
-        self.state = MissionState::Archived;
+    /// Update Mission state.
+    pub fn set_state(&mut self, state: MissionState) {
+        self.state = state;
     }
 }
-

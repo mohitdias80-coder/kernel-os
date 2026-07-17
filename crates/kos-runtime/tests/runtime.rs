@@ -4,26 +4,26 @@ use kos_runtime::Runtime;
 fn runtime_can_be_created() {
     let runtime = Runtime::new();
 
-    assert!(runtime.manager().is_empty());
+    assert!(runtime.missions().is_empty());
+    assert!(runtime.contexts().is_empty());
 }
 
 #[test]
 fn mission_creation_works() {
     let mut runtime = Runtime::new();
 
-    let id = runtime.create_mission("Test Mission");
+    let id = runtime.create_mission("First Mission");
 
-    assert_eq!(runtime.manager().len(), 1);
-    assert!(runtime.manager().get(id).is_some());
+    assert_eq!(runtime.missions().len(), 1);
+    assert!(runtime.missions().get(id).is_some());
 }
 
 #[test]
-fn mission_ids_are_unique() {
+fn mission_has_context() {
     let mut runtime = Runtime::new();
 
-    let id1 = runtime.create_mission("Mission A");
-    let id2 = runtime.create_mission("Mission B");
+    runtime.create_mission("Mission");
 
-    assert_ne!(id1, id2);
+    assert_eq!(runtime.contexts().len(), 1);
 }
 
