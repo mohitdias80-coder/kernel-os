@@ -1,0 +1,14 @@
+[package]
+name = "kos-context"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+description = "Kernel OS Context Space"
+
+[dependencies]
+kos-core = { path = "../kos-core" }
+
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+uuid = { version = "1", features = ["v4", "serde"] }
+
