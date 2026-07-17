@@ -61,6 +61,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "kos-compute"
+version = "0.1.0"
+
+[[package]]
 name = "kos-context"
 version = "0.1.0"
 dependencies = [
