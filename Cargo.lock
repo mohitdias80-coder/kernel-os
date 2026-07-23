@@ -61,6 +61,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "kos-agent"
+version = "0.1.0"
+dependencies = [
+ "kos-capability",
+ "kos-context",
+ "kos-core",
+ "kos-knowledge",
+ "kos-runtime",
+ "kos-trust",
+ "serde",
+]
+
+[[package]]
 name = "kos-capability"
 version = "0.1.0"
 

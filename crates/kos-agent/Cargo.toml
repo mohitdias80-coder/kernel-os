@@ -1,0 +1,14 @@
+[package]
+name = "kos-agent"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+kos-core = { path = "../kos-core" }
+kos-runtime = { path = "../kos-runtime" }
+kos-context = { path = "../kos-context" }
+kos-capability = { path = "../kos-capability" }
+kos-knowledge = { path = "../kos-knowledge" }
+kos-trust = { path = "../kos-trust" }
+serde = { version = "1", features = ["derive"] }
+
