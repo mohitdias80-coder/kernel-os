@@ -61,6 +61,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "kos-abi"
+version = "0.1.0"
+
+[[package]]
 name = "kos-agent"
 version = "0.1.0"
 dependencies = [
@@ -106,6 +110,19 @@ version = "0.1.0"
 dependencies = [
  "kos-core",
  "serde",
+]
+
+[[package]]
+name = "kos-orchestrator"
+version = "0.1.0"
+dependencies = [
+ "kos-agent",
+ "kos-capability",
+ "kos-compute",
+ "kos-core",
+ "kos-knowledge",
+ "kos-runtime",
+ "kos-trust",
 ]
 
 [[package]]

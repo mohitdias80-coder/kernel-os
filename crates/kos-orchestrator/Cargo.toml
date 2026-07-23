@@ -1,0 +1,13 @@
+[package]
+name = "kos-orchestrator"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+kos-core = { path = "../kos-core" }
+kos-runtime = { path = "../kos-runtime" }
+kos-agent = { path = "../kos-agent" }
+kos-capability = { path = "../kos-capability" }
+kos-compute = { path = "../kos-compute" }
+kos-knowledge = { path = "../kos-knowledge" }
+kos-trust = { path = "../kos-trust" }
