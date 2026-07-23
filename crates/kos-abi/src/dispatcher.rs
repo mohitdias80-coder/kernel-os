@@ -1,15 +1,20 @@
 use crate::{AbiCall, AbiResponse, Command};
+use kos_orchestrator::Orchestrator;
 
 /// Dispatches ABI commands into Kernel OS.
-#[derive(Debug, Default)]
-pub struct AbiDispatcher;
+#[derive(Debug)]
+pub struct AbiDispatcher {
+    orchestrator: Orchestrator,
+}
 
 impl AbiDispatcher {
-    pub fn new() -> Self {
-        Self
+pub fn new() -> Self {
+    Self {
+        orchestrator: Orchestrator::new(),
     }
+}
 
-    pub fn dispatch(&self, command: Command) -> AbiResponse {
+pub fn dispatch(&mut self, command: Command) -> AbiResponse {
         let _call = match command.name() {
             "ping" => return AbiResponse::ok("pong"),
 
@@ -22,6 +27,9 @@ impl AbiDispatcher {
 
             _ => return AbiResponse::error("Unknown ABI command"),
         };
+
+        // Forward into the Kernel OS execution pipeline.
+self.orchestrator.tick();
 
         AbiResponse::ok("Command accepted")
     }

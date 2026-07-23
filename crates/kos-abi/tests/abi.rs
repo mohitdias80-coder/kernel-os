@@ -2,7 +2,7 @@ use kos_abi::{AbiDispatcher, Command, ABI_VERSION};
 
 #[test]
 fn ping_returns_pong() {
-    let dispatcher = AbiDispatcher::new();
+let mut dispatcher = AbiDispatcher::new();
 
     let response = dispatcher.dispatch(Command::new("ping"));
 
@@ -12,7 +12,7 @@ fn ping_returns_pong() {
 
 #[test]
 fn version_returns_abi_version() {
-    let dispatcher = AbiDispatcher::new();
+let mut dispatcher = AbiDispatcher::new();
 
     let response = dispatcher.dispatch(Command::new("version"));
 
@@ -22,7 +22,7 @@ fn version_returns_abi_version() {
 
 #[test]
 fn unknown_command_returns_error() {
-    let dispatcher = AbiDispatcher::new();
+let mut dispatcher = AbiDispatcher::new();
 
     let response = dispatcher.dispatch(Command::new("unknown"));
 
